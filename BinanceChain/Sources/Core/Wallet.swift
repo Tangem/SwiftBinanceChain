@@ -2,17 +2,18 @@ import Foundation
 import HDWalletKit
 import CryptoSwift
 
-public class Wallet: CustomStringConvertible {
+public class BinanceWallet: CustomStringConvertible {
 
     public var endpoint: String = BinanceChain.Endpoint.testnet.rawValue
     public var privateKey: Data { return self.key.raw }
-    public var publicKey: Data { return self.key.publicKey.data }
+    public var publicKey: Data { return externalPublicKey ?? self.key.publicKey.data }
     public var mnemonic: String = ""
     public var sequence: Int = 0
     public var accountNumber: Int = 0
     public var chainId: String = ""
 
     private var key: PrivateKey!
+    private var externalPublicKey: Data?
 
     // MARK: - Constructors
     
@@ -46,6 +47,11 @@ public class Wallet: CustomStringConvertible {
         self.init()
         if let endpoint = endpoint { self.endpoint = endpoint }
         self.key = PrivateKey(pk: privateKey, coin: .bitcoin)
+    }
+    
+    public convenience init(publicKey: Data) {
+        self.init()
+        externalPublicKey = publicKey
     }
 
     private func initialise(mnemonic: String, completion: Completion? = nil) {

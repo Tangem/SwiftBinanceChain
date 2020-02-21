@@ -22,7 +22,7 @@ public class Message {
     }
 
     private var type: MessageType = .newOrder
-    private var wallet: Wallet
+    private var wallet: BinanceWallet
     private var symbol: String = ""
     private var orderId: String = ""
     private var orderType: OrderType = .limit
@@ -37,15 +37,15 @@ public class Message {
     private var proposalId: Int = 0
     private var voteOption: VoteOption = .no
     private var source: Source = .broadcast
-
+    private var externalSignature: Data?
     // MARK: - Constructors
 
-    private init(type: MessageType, wallet: Wallet) {
+    private init(type: MessageType, wallet: BinanceWallet) {
         self.type = type
         self.wallet = wallet
     }
 
-    public static func newOrder(symbol: String, orderType: OrderType, side: Side, price: Double, quantity: Double, timeInForce: TimeInForce, wallet: Wallet) -> Message {
+    public static func newOrder(symbol: String, orderType: OrderType, side: Side, price: Double, quantity: Double, timeInForce: TimeInForce, wallet: BinanceWallet) -> Message {
         let message = Message(type: .newOrder, wallet: wallet)
         message.symbol = symbol
         message.orderType = orderType
@@ -57,28 +57,28 @@ public class Message {
         return message
     }
 
-    public static func cancelOrder(symbol: String, orderId: String, wallet: Wallet) -> Message {
+    public static func cancelOrder(symbol: String, orderId: String, wallet: BinanceWallet) -> Message {
         let message = Message(type: .cancelOrder, wallet: wallet)
         message.symbol = symbol
         message.orderId = orderId
         return message
     }
 
-    public static func freeze(symbol: String, amount: Double, wallet: Wallet) -> Message  {
+    public static func freeze(symbol: String, amount: Double, wallet: BinanceWallet) -> Message  {
         let message = Message(type: .freeze, wallet: wallet)
         message.symbol = symbol
         message.amount = amount
         return message
     }
 
-    public static func unfreeze(symbol: String, amount: Double, wallet: Wallet) -> Message  {
+    public static func unfreeze(symbol: String, amount: Double, wallet: BinanceWallet) -> Message  {
         let message = Message(type: .unfreeze, wallet: wallet)
         message.symbol = symbol
         message.amount = amount
         return message
     }
 
-    public static func transfer(symbol: String, amount: Double, to address: String, wallet: Wallet) -> Message {
+    public static func transfer(symbol: String, amount: Double, to address: String, wallet: BinanceWallet) -> Message {
         let message = Message(type: .transfer, wallet: wallet)
         message.symbol = symbol
         message.amount = amount
@@ -86,7 +86,7 @@ public class Message {
         return message
     }
 
-    public static func vote(proposalId: Int, vote option: VoteOption, wallet: Wallet) -> Message {
+    public static func vote(proposalId: Int, vote option: VoteOption, wallet: BinanceWallet) -> Message {
         let message = Message(type: .vote, wallet: wallet)
         message.proposalId = proposalId
         message.voteOption = option
@@ -128,6 +128,16 @@ public class Message {
 
         return transaction
 
+    }
+    
+    public func encodeForSignature() -> Data {
+        let json = self.json(for: .signature)
+        let test = Data(json.utf8)
+        return test.sha256()
+    }
+    
+    public func add(signature: Data) {
+        self.externalSignature = signature
     }
     
     // MARK: - Private
@@ -218,6 +228,9 @@ public class Message {
     }
 
     private func signature() -> Data {
+        if let signature = self.externalSignature {
+            return signature
+        }
         let json = self.json(for: .signature)
         let data = Data(json.utf8)
         return self.wallet.sign(message: data)

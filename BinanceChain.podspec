@@ -23,13 +23,13 @@ Pod::Spec.new do |s|
     sub.dependency 'BinanceChain/Protobuf'
     sub.dependency 'BinanceChain/Util'
     sub.dependency 'BinanceChain/Libraries'
-    sub.dependency 'Alamofire', '~> 4.8'
-    sub.dependency 'SwiftyJSON', '~> 4.3'
-    sub.dependency 'SwiftProtobuf', '~> 1.4'
-    sub.dependency 'Starscream', '~> 3.1'
-    sub.dependency 'XCGLogger', '~> 7.0'
-    sub.dependency 'SwiftDate', '~> 6.0.1'
-    sub.dependency 'HDWalletKit', '~> 0.2.7'
+    sub.dependency 'Alamofire'
+    sub.dependency 'SwiftyJSON'
+    sub.dependency 'SwiftProtobuf'
+    sub.dependency 'Starscream'
+    sub.dependency 'XCGLogger'
+    sub.dependency 'SwiftDate'
+    sub.dependency 'HDWalletKit'
   end
 
   s.subspec 'Util' do |sub|

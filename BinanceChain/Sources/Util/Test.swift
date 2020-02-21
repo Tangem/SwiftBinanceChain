@@ -205,7 +205,7 @@ public class Test: WebSocketDelegate {
     public func testBroadcast(endpoint: BinanceChain.Endpoint = .testnet) {
 
         let binance = BinanceChain(endpoint: endpoint)
-        let wallet = Wallet(mnemonic: mnemonic, endpoint: endpoint)
+        let wallet = BinanceWallet(mnemonic: mnemonic, endpoint: endpoint)
         wallet.synchronise() { (error) in
 
             self.output("wallet.init", wallet, error)
@@ -251,7 +251,7 @@ public class Test: WebSocketDelegate {
         // Run a broadcast control test
         
         let binance = BinanceChain(endpoint: endpoint)
-        let wallet = Wallet(mnemonic: mnemonic, endpoint: .testnet)
+        let wallet = BinanceWallet(mnemonic: mnemonic, endpoint: .testnet)
         wallet.synchronise() { (error) in
 
             self.output("wallet.init", wallet, error)
@@ -368,13 +368,13 @@ public class Test: WebSocketDelegate {
 
         let mnemonic = Mnemonic.create()
         
-        let walletAuto = Wallet(endpoint: endpoint)
+        let walletAuto = BinanceWallet(endpoint: endpoint)
         output("wallet.auto", walletAuto)
 
-        let walletMnemonic = Wallet(mnemonic: mnemonic, endpoint: endpoint)
+        let walletMnemonic = BinanceWallet(mnemonic: mnemonic, endpoint: endpoint)
         output("wallet.mnemonic", walletMnemonic)
 
-        let walletKey = Wallet(privateKey: walletMnemonic.privateKey.hexlify, endpoint: endpoint)
+        let walletKey = BinanceWallet(privateKey: walletMnemonic.privateKey.hexlify, endpoint: endpoint)
         output("wallet.privatekey", walletKey)
 
     }
@@ -383,7 +383,7 @@ public class Test: WebSocketDelegate {
 
     private func testNodeRPC(endpoint: BinanceChain.Endpoint) {
 
-        let wallet = Wallet()
+        let wallet = BinanceWallet()
         let message = Message.newOrder(symbol: "BNB_BTC.B-918", orderType: .limit, side: .buy, price: 100,
                                        quantity: 1, timeInForce: .goodTillExpire, wallet: wallet)
 
