@@ -30,6 +30,7 @@ Pod::Spec.new do |s|
     sub.dependency 'XCGLogger', '~> 7.0'
     sub.dependency 'SwiftDate', '~> 6.0.1'
     sub.dependency 'HDWalletKit'
+    sub.dependency 'secp256k1.swift'
   end
 
   s.subspec 'Util' do |sub|
