@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   }
   s.swift_version = '5'
   s.default_subspecs = 'Core'
-  s.static_framework = true
+  s.static_framework = false
 
   s.subspec 'Core' do |sub|
     sub.source_files = 'BinanceChain/Sources/Core/*.swift'
