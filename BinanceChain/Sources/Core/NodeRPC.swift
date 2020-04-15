@@ -232,7 +232,7 @@ public class NodeRPC {
     internal func api(path: Path, parameters: Parameters = [:], completion: Completion? = nil) -> Request? {
 
         let encoding = JSONRPCEncoding(id: UUID().uuidString, method: path.rawValue, parameters: parameters)
-        let request = Alamofire.request(self.endpoint, method: .post, parameters: parameters, encoding: encoding)
+        let request = AF.request(self.endpoint, method: .post, parameters: parameters, encoding: encoding)
         request.validate(statusCode: 200..<300)
         request.responseData() { (http) -> Void in
             DispatchQueue.global(qos: .background).async {

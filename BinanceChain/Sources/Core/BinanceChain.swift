@@ -246,7 +246,7 @@ public class BinanceChain {
         var encoding: ParameterEncoding = URLEncoding.default
         if let body = body { encoding = HexEncoding(data: body) }
         let url = String(format: "%@/%@", self.endpoint, path)
-        let request = Alamofire.request(url, method: method, parameters: parameters, encoding: encoding)
+        let request = AF.request(url, method: method, parameters: parameters, encoding: encoding)
         request.validate(statusCode: 200..<300)
         request.responseData() { (http) -> Void in
             DispatchQueue.global(qos: .background).async {
