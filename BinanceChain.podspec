@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
     sub.dependency 'BinanceChain/Protobuf'
     sub.dependency 'BinanceChain/Util'
     sub.dependency 'BinanceChain/Libraries'
-    sub.dependency 'Alamofire', '~> 4.8'
+    sub.dependency 'Alamofire'
     sub.dependency 'SwiftyJSON'
     sub.dependency 'SwiftProtobuf', '~> 1.4'
     sub.dependency 'Starscream', '~> 3.1'
