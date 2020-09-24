@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'BinanceChain'
-  s.version      = '1.0.0-beta'
+  s.version      = '1.0.1-beta'
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.summary      = 'BinanceChain'
   s.author       = { 'Michael Henderson' => 'roadkillrabbit@gmail.com' }

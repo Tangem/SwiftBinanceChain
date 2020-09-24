@@ -17,7 +17,7 @@ public class BinanceWallet: CustomStringConvertible {
 
     // MARK: - Constructors
     
-    public required init() {
+    public init() {
         self.initialise(mnemonic: Mnemonic.create())
     }
 
@@ -49,9 +49,9 @@ public class BinanceWallet: CustomStringConvertible {
         self.key = PrivateKey(pk: privateKey, coin: .bitcoin)
     }
     
-    public convenience init(publicKey: Data) {
-        self.init()
-        externalPublicKey = publicKey
+    public init(publicKey: Data) {
+        self.key = PrivateKey(privateKey: Data(), chainCode: Data(), index: 0, coin: .bitcoin)
+        self.externalPublicKey = publicKey
     }
 
     private func initialise(mnemonic: String, completion: Completion? = nil) {
