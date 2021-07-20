@@ -78,11 +78,12 @@ public class Message {
         return message
     }
 
-    public static func transfer(symbol: String, amount: Double, to address: String, wallet: BinanceWallet) -> Message {
+    public static func transfer(symbol: String, amount: Double, to address: String, memo: String = "", wallet: BinanceWallet) -> Message {
         let message = Message(type: .transfer, wallet: wallet)
         message.symbol = symbol
         message.amount = amount
         message.toAddress = address
+        message.memo = memo
         return message
     }
 
