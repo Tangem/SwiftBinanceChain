@@ -99,11 +99,22 @@ public class WebSocket {
         self.delegate = delegate
 
         guard let url = URL(string: endpoint.rawValue) else { return }
-        self.socket = Starscream.WebSocket(url: url)
-        self.socket.onConnect = { self.onConnect() }
-        self.socket.onText = { (text: String) in self.onText(text: text) }
-        self.socket.onDisconnect = { (error: Error?) in self.onDisconnect() }
-
+        self.socket = Starscream.WebSocket(request: URLRequest(url: url))
+        self.socket.onEvent = { event in
+            switch event {
+            case .binary(_): break
+            case .connected(_):
+                self.onConnect()
+            case .cancelled, .disconnected, .error:
+                self.onDisconnect()
+            case .ping(_): break
+            case .pong(_): break
+            case .reconnectSuggested(_): break
+            case .text(let text):
+                self.onText(text: text)
+            case .viabilityChanged(_): break
+            }
+        }
     }
 
     public func connect(endpoint: Endpoint = .testnet, completion: @escaping ()->()) {
