@@ -1,64 +1,20 @@
 import Foundation
-import HDWalletKit
-import CryptoSwift
+import CryptoKit
 
 public class BinanceWallet: CustomStringConvertible {
 
     public var endpoint: String = BinanceChain.Endpoint.testnet.rawValue
-    public var privateKey: Data { return self.key.raw }
-    public var publicKey: Data { return externalPublicKey ?? self.key.publicKey.data }
-    public var mnemonic: String = ""
+    public var publicKey: Data
     public var sequence: Int = 0
     public var accountNumber: Int = 0
     public var chainId: String = ""
 
-    private var key: PrivateKey!
     private var externalPublicKey: Data?
 
     // MARK: - Constructors
-    
-    public init() {
-        self.initialise(mnemonic: Mnemonic.create())
-    }
 
-    public convenience init(endpoint: BinanceChain.Endpoint = .testnet) {
-        self.init(mnemonic: Mnemonic.create(), endpoint: endpoint.rawValue)
-    }
-
-    public convenience init(endpoint: String? = nil) {
-        self.init(mnemonic: Mnemonic.create(), endpoint: endpoint)
-    }
-
-    public convenience init(mnemonic: String, endpoint: BinanceChain.Endpoint) {
-        self.init(mnemonic: mnemonic, endpoint: endpoint.rawValue)
-    }
-
-    public convenience init(mnemonic: String, endpoint: String? = nil) {
-        self.init()
-        if let endpoint = endpoint { self.endpoint = endpoint }
-        self.initialise(mnemonic: mnemonic)
-    }
-
-    public convenience init(privateKey: String, endpoint: BinanceChain.Endpoint) {
-        self.init(privateKey: privateKey, endpoint: endpoint.rawValue)
-    }
-
-    public convenience init(privateKey: String, endpoint: String? = nil) {
-        self.init()
-        if let endpoint = endpoint { self.endpoint = endpoint }
-        self.key = PrivateKey(pk: privateKey, coin: .bitcoin)
-    }
-    
     public init(publicKey: Data) {
-        self.key = PrivateKey(privateKey: Data(), chainCode: Data(), index: 0, coin: .bitcoin)
-        self.externalPublicKey = publicKey
-    }
-
-    private func initialise(mnemonic: String, completion: Completion? = nil) {
-        self.mnemonic = mnemonic
-        let seed = Mnemonic.createSeed(mnemonic: mnemonic)
-        let key = PrivateKey(seed: seed, coin: .bitcoin)
-        self.key = key.bip44PrivateKey
+        self.publicKey = publicKey
     }
 
     // MARK: - Wallet
@@ -149,46 +105,12 @@ public class BinanceWallet: CustomStringConvertible {
             return "Invalid Key"
         }
     }
-    
-    public func sign(message: Data) -> Data {
-        do {
-            return try ECDSA.compactsign(message.sha256(), privateKey: self.privateKey)
-        } catch let error {
-            print(error)
-        }
-        return message
-    }
 
     // MARK: - CustomStringConvertible
 
     public var description: String {
-        return String(format: "Wallet [address=%@ accountNumber=%d, sequence=%d, chain_id=%@, mnemonic=%@, account=%@, publicKey=%@, privateKey=%@, endpoint=%@]",
-                      address, accountNumber, sequence, chainId, mnemonic, account, publicKey.hexlify, privateKey.hexlify, endpoint)
+        return String(format: "Wallet [address=%@ accountNumber=%d, sequence=%d, chain_id=%@, account=%@, publicKey=%@, endpoint=%@]",
+                      address, accountNumber, sequence, chainId, account, publicKey.hexlify, endpoint)
     }
 
 }
-
-
-// MARK: - HDWalletKit
-
-fileprivate extension HDWalletKit.PrivateKey {
-
-    var bip44PrivateKey: PrivateKey {
-
-        // BIP44 key derivation explained:
-        // https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki
-
-        // m/44'/714'/0'/0/0
-        let bip44Purpose: UInt32 = 44
-        let binanceChainCoin: UInt32 = 714
-        let purpose = self.derived(at: .hardened(bip44Purpose))
-        let coinType = purpose.derived(at: .hardened(binanceChainCoin))
-        let account = coinType.derived(at: .hardened(0))
-        let change = account.derived(at: .notHardened(0))
-        let recieve = change.derived(at: .notHardened(0))
-        return recieve
-
-    }
-    
-}
-

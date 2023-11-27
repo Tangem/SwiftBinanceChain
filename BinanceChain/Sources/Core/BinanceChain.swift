@@ -1,7 +1,6 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-import XCGLogger
 
 // https://binance-chain.github.io/api-reference/dex-api/paths.html
 

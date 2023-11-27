@@ -1,7 +1,6 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-import XCGLogger
 
 // NodeRPC implemented using JSONRPC/HTTP
 // https://docs.binance.org/api-reference/node-rpc.html

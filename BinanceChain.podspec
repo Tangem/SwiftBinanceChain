@@ -26,11 +26,7 @@ Pod::Spec.new do |s|
     sub.dependency 'Alamofire'
     sub.dependency 'SwiftyJSON'
     sub.dependency 'SwiftProtobuf'
-    sub.dependency 'Starscream'
-    sub.dependency 'XCGLogger'
     sub.dependency 'SwiftDate'
-    sub.dependency 'HDWalletKit'
-    sub.dependency 'secp256k1.swift'
   end
 
   s.subspec 'Util' do |sub|

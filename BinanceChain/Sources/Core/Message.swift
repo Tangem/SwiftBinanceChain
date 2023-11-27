@@ -1,6 +1,5 @@
 import Foundation
 import SwiftProtobuf
-import HDWalletKit
 
 public class Message {
 
@@ -232,9 +231,8 @@ public class Message {
         if let signature = self.externalSignature {
             return signature
         }
-        let json = self.json(for: .signature)
-        let data = Data(json.utf8)
-        return self.wallet.sign(message: data)
+        
+        fatalError("you should set signature from outside")
     }
 
     private func json(for type: MessageType) -> String {
