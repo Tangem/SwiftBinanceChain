@@ -12,8 +12,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/tangem/swift-protobuf-binaries.git", exact: "1.25.2-tangem1"),
+        .package(url: "https://github.com/tangem/SwiftyJSON.git", exact: "5.0.1-tangem1"),
         .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.0.0"),
-        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "5.0.0"),
         .package(url: "https://github.com/malcommac/SwiftDate", from: "7.0.0"),
     ],
     targets: [
