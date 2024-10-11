@@ -20,12 +20,12 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |sub|
     # 'SwiftProtobuf' dependency must be added via SPM
-    # 'Alamofire' dependency must be added via SPM
 
     sub.source_files = 'BinanceChain/Sources/Core/*.swift'
     sub.dependency 'BinanceChain/Protobuf'
     sub.dependency 'BinanceChain/Util'
     sub.dependency 'BinanceChain/Libraries'
+    sub.dependency 'Alamofire'
     sub.dependency 'SwiftyJSON'
     sub.dependency 'SwiftDate'
   end
