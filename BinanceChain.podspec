@@ -5,10 +5,7 @@ Pod::Spec.new do |s|
   s.summary      = 'BinanceChain'
   s.author       = { 'Michael Henderson' => 'roadkillrabbit@gmail.com' }
   s.homepage     = 'http://github.com/mh7821/SwiftBinanceChain/'
-  s.osx.deployment_target = '10.11'
-  s.ios.deployment_target = '11.0'
-  s.tvos.deployment_target = '11.0'
-  s.watchos.deployment_target = '2.0'
+  s.ios.deployment_target = '15.0'
   s.requires_arc = true
   s.source       = { :path => 'BinanceChain' }
   s.pod_target_xcconfig = {
@@ -36,10 +33,6 @@ Pod::Spec.new do |s|
 
   s.subspec 'Protobuf' do |sub|
     sub.source_files = 'BinanceChain/Sources/Protobuf/*.swift'
-  end
-
-  s.subspec 'Test' do |sub|
-    sub.source_files = 'BinanceChain/Sources/Test/*.swift'
   end
 
   s.subspec 'Libraries' do |sub|
