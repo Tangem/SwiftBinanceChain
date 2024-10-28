@@ -1,5 +1,5 @@
 {
-  "originHash" : "62714b0994ea5d5bd8bc49df1eaf4cf4849fbf60ca33287961b5c7c5c77da75b",
+  "originHash" : "9abb0757a9036025b08c74c743a6ac46c315af7ff4bf8bb142edbc0dc7bf11b3",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/tangem/swift-protobuf-binaries.git",
       "state" : {
-        "revision" : "de30521530591d98be12133724e3d78bc0524e41",
-        "version" : "1.25.2-tangem1"
+        "revision" : "594a9b8c47df13087ee0a1f25dbc64173604d0e9",
+        "version" : "1.25.2-tangem3"
       }
     },
     {
